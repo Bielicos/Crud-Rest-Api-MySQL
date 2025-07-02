@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.controllers.SignupDTO;
+import com.example.demo.controllers.UpdateUserDTO;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,20 @@ public class UserService {
 
     public void deleteUserById (String userId) {
         userRepository.deleteById(Integer.parseInt(userId));
+    }
+
+    public void updateUserById (String userId, UpdateUserDTO updateUserDTO) {
+        Integer id = Integer.parseInt(userId);
+        var UserEntity =  userRepository.findById(id);
+        if(UserEntity.isPresent()) {
+            var user =  UserEntity.get();
+            if(updateUserDTO.username() != null) {
+                user.setUsername(updateUserDTO.username());
+            }
+            if(updateUserDTO.password() != null) {
+                user.setPassword(updateUserDTO.password());
+            }
+            userRepository.save(user);
+        }
     }
 }
