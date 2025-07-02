@@ -1,8 +1,8 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
-import com.example.demo.entities.User;
-import com.example.demo.repositories.UserRepository;
-import com.example.demo.services.UserService;
+import com.example.demo.infrastructure.entitys.UserEntity;
+import com.example.demo.infrastructure.repositories.UserRepository;
+import com.example.demo.business.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable String userId) {
+    public ResponseEntity<UserEntity> getUserById(@PathVariable String userId) {
         var user = userService.getUserById(userId);
         if (user.isPresent()) {
             return ResponseEntity.ok().body(user.get());
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<UserEntity>> getUsers() {
         var users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }

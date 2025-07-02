@@ -1,9 +1,10 @@
-package com.example.demo.services;
+package com.example.demo.business;
 
-import com.example.demo.controllers.SignupDTO;
-import com.example.demo.controllers.UpdateUserDTO;
-import com.example.demo.entities.User;
-import com.example.demo.repositories.UserRepository;
+import com.example.demo.controller.SignupDTO;
+import com.example.demo.controller.UpdateUserDTO;
+import com.example.demo.infrastructure.entitys.UserEntity;
+import com.example.demo.infrastructure.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,19 +19,20 @@ public class UserService {
     }
 
     public Integer createUser (SignupDTO signupDTO) {
-        User user = new User();
-        user.setUsername(signupDTO.username());
-        user.setEmail(signupDTO.email());
-        user.setPassword(signupDTO.password());
-        var usuarioSalvo =  userRepository.save(user);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(signupDTO.username());
+        userEntity.setEmail(signupDTO.email());
+        userEntity.setPassword(signupDTO.password());
+        var usuarioSalvo =  userRepository.save(userEntity);
         return usuarioSalvo.getUserId();
     }
 
-    public Optional<User> getUserById (String userId) {
-        return userRepository.findById(Integer.parseInt(userId));
+    public Optional<UserEntity> getUserById (String userId) {
+        Integer id = Integer.parseInt(userId);
+        return userRepository.findById(id);
     }
 
-    public List<User> getAllUsers () {
+    public List<UserEntity> getAllUsers () {
         return userRepository.findAll();
     }
 
