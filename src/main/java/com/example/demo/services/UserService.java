@@ -5,6 +5,7 @@ import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,5 +27,13 @@ public class UserService {
 
     public Optional<User> getUserById (String userId) {
         return userRepository.findById(Integer.parseInt(userId));
+    }
+
+    public List<User> getAllUsers () {
+        return userRepository.findAll();
+    }
+
+    public void deleteUserById (String userId) {
+        userRepository.deleteById(Integer.parseInt(userId));
     }
 }
