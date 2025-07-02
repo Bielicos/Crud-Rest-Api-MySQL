@@ -5,6 +5,8 @@ import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -20,5 +22,9 @@ public class UserService {
         user.setPassword(signupDTO.password());
         var usuarioSalvo =  userRepository.save(user);
         return usuarioSalvo.getUserId();
+    }
+
+    public Optional<User> getUserById (String userId) {
+        return userRepository.findById(Integer.parseInt(userId));
     }
 }
