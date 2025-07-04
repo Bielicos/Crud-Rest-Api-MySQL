@@ -1,10 +1,9 @@
-package com.example.demo.business;
+package com.example.demo.service;
 
-import com.example.demo.controller.SignupDTO;
-import com.example.demo.controller.UpdateUserDTO;
-import com.example.demo.infrastructure.entitys.UserEntity;
-import com.example.demo.infrastructure.repositories.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.demo.dto.CreateUserDTO;
+import com.example.demo.dto.UpdateUserDTO;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +17,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Integer createUser (SignupDTO signupDTO) {
+    public Integer createUser (CreateUserDTO createUserDTO) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(signupDTO.username());
-        userEntity.setEmail(signupDTO.email());
-        userEntity.setPassword(signupDTO.password());
+        userEntity.setUsername(createUserDTO.username());
+        userEntity.setEmail(createUserDTO.email());
+        userEntity.setPassword(createUserDTO.password());
         var usuarioSalvo =  userRepository.save(userEntity);
         return usuarioSalvo.getUserId();
     }

@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.infrastructure.entitys.UserEntity;
-import com.example.demo.infrastructure.repositories.UserRepository;
-import com.example.demo.business.UserService;
+import com.example.demo.dto.CreateUserDTO;
+import com.example.demo.dto.UpdateUserDTO;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/user")
 public class UserController {
     private UserRepository userRepository;
     private UserService userService;
@@ -21,8 +23,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> signup(@RequestBody SignupDTO signupDTO ) {
-        Integer newUserId = userService.createUser(signupDTO);
+    public ResponseEntity<String> signup(@RequestBody CreateUserDTO createUserDTO) {
+        Integer newUserId = userService.createUser(createUserDTO);
         var location = URI.create("/crud/signup/" + newUserId.toString());
         return ResponseEntity.created(location).body("ID do usuário : " + newUserId);
     }
@@ -54,5 +56,4 @@ public class UserController {
         userService.updateUserById(userId, updateUserDTO);
         return ResponseEntity.noContent().build();
     }
-
 }
