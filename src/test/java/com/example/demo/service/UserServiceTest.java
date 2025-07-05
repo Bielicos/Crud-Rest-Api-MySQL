@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -136,5 +137,31 @@ class UserServiceTest {
         }
 
 
+    }
+
+    @Nested
+    class getAllUsers {
+        @Test
+        @DisplayName("Should get all users with success")
+        void shouldGetAllUsersWithSuccess() {
+            // Arrange
+            var user = new UserEntity(
+                    3,
+                    "Tamyris",
+                    "tamirys@email.com",
+                    "senha456",
+                    Instant.now(),
+                    Instant.now()
+            );
+            var listaDeUsuarios = List.of(user);
+            doReturn(listaDeUsuarios).when(userRepository).findAll();
+
+            // Act
+            var output =  userService.getAllUsers();
+
+            // Arrange
+            assertFalse(output.isEmpty(), "Verifica se não retorna algo vazio");
+            assertEquals(listaDeUsuarios.size(), output.size(), "Compara se recebeu uma lista de usuários");
+        }
     }
 }
