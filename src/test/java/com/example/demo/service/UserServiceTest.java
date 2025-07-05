@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,6 +32,9 @@ class UserServiceTest {
 
     @Captor
     private ArgumentCaptor<UserEntity> userEntityArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<Integer> integerArgumentCaptor;
 
     @Nested
     class CreateUser {
@@ -81,5 +85,56 @@ class UserServiceTest {
             //Act $ Assert
             assertThrows(RuntimeException.class, () -> userService.createUser(input));
         }
+    }
+
+    @Nested
+    class GetUserById {
+
+        @Test
+        @DisplayName("Should get user by id with success when optional is present")
+        void shouldGetUserByIdWithSuccessWhenOptionalIsPresent() {
+            // Arrange
+            var user = new UserEntity(
+                    2,
+                    "Juan",
+                    "juan@email.com",
+                    "senha321",
+                    Instant.now(),
+                    Instant.now()
+            );
+            // quando findById for chamado com qualquer Integer, retorna Optional.of(user)
+            doReturn(Optional.of(user))
+                    .when(userRepository)
+                    .findById(integerArgumentCaptor.capture());
+
+            // Act
+            var output = userService.getUserById(user.getUserId().toString());
+
+            // Assert
+            assertTrue(output.isPresent(), "Esperava Optional contendo usuário");
+            // Verifica que o ID passado ao repository foi o mesmo do nosso user
+            assertEquals(user.getUserId(), integerArgumentCaptor.getValue(),
+                    "O ID capturado deve ser igual ao ID do usuário");
+            // Verifica que o objeto retornado é exatamente o mesmo que criamos
+            assertEquals(user, output.get(),
+                    "O objeto dentro do Optional deve ser o mesmo user criado");
+        }
+
+        @Test
+        @DisplayName("Should get user by id with success when optional is empty")
+        void shouldGetUserByIdWithSuccessWhenOptionalIsEmpty() {
+            // Arrange
+            Integer userId = 3;
+            doReturn(Optional.empty()).when(userRepository).findById(integerArgumentCaptor.capture());
+
+            // Act
+            var output = userService.getUserById(userId.toString());
+
+            // Arrange
+            assertTrue(output.isEmpty(), "Esperava Optional vazio");
+            assertEquals(userId, integerArgumentCaptor.getValue(), "Comparar se o ID capturado é o mesmo ID que não existe");
+        }
+
+
     }
 }
