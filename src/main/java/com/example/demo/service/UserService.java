@@ -22,8 +22,8 @@ public class UserService {
         userEntity.setUsername(createUserDTO.username());
         userEntity.setEmail(createUserDTO.email());
         userEntity.setPassword(createUserDTO.password());
-        var usuarioSalvo =  userRepository.save(userEntity);
-        return usuarioSalvo.getUserId();
+        var savedUser =  userRepository.save(userEntity);
+        return savedUser.getUserId();
     }
 
     public Optional<UserEntity> getUserById (String userId) {
@@ -36,7 +36,11 @@ public class UserService {
     }
 
     public void deleteUserById (String userId) {
-        userRepository.deleteById(Integer.parseInt(userId));
+        var id = Integer.parseInt(userId);
+        var userExists = userRepository.existsById(id);
+        if (userExists) {
+            userRepository.deleteById(id);
+        }
     }
 
     public void updateUserById (String userId, UpdateUserDTO updateUserDTO) {
