@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.investhub.dto;
 
 public record UpdateUserDTO (String username, String password){
 }

@@ -1,9 +1,9 @@
-package com.example.demo.service;
+package com.example.investhub.service;
 
-import com.example.demo.dto.CreateUserDTO;
-import com.example.demo.dto.UpdateUserDTO;
-import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.investhub.dto.CreateUserDTO;
+import com.example.investhub.dto.UpdateUserDTO;
+import com.example.investhub.entity.UserEntity;
+import com.example.investhub.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

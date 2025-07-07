@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.investhub.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,12 +6,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = "user_tb")
 @Entity
 public class UserEntity {
@@ -33,4 +33,7 @@ public class UserEntity {
 
     @UpdateTimestamp
     private Instant modificationTimeStamp;
+
+    @OneToMany(mappedBy = "user")
+    private List<AccountEntity> accounts;
 }

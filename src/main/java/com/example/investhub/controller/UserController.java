@@ -1,10 +1,10 @@
-package com.example.demo.controller;
+package com.example.investhub.controller;
 
-import com.example.demo.dto.CreateUserDTO;
-import com.example.demo.dto.UpdateUserDTO;
-import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
+import com.example.investhub.dto.CreateUserDTO;
+import com.example.investhub.dto.UpdateUserDTO;
+import com.example.investhub.entity.UserEntity;
+import com.example.investhub.repository.UserRepository;
+import com.example.investhub.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
