@@ -34,6 +34,8 @@ public class UserEntity {
     @UpdateTimestamp
     private Instant modificationTimeStamp;
 
+    // Relacionamento
+
     @OneToMany(mappedBy = "user")
     private List<AccountEntity> accounts;
 }

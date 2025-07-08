@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,4 +32,7 @@ public class AccountEntity {
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "account")
+    public List<AccountEntity> accounts;
 }
