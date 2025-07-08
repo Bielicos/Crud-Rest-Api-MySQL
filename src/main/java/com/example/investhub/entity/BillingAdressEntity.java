@@ -1,4 +1,33 @@
 package com.example.investhub.entity;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Table(name = "billingAdress_tb")
+@Entity
 public class BillingAdressEntity {
+    @Id
+    @Column(name = "accountId")
+    private int accountId;
+
+    @OneToOne
+    @MapsId // O que qualifica o identificador acima é a entidade abaixo "Account". Logo, essa anotation garante que o primary key da entidade "Account" seja a coluna "accountId" acima.
+    @JoinColumn(name = "accountId")
+    private AccountEntity account;
+
+    @Column
+    private String street;
+
+    @Column
+    private Integer number;
+
+    // Relacionamento
+
 }

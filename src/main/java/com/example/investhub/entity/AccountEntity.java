@@ -21,6 +21,12 @@ public class AccountEntity {
     @Column(name = "description")
     private String description;
 
+    // Relacionamentos
+
+    @OneToOne(mappedBy = "account")
+    @PrimaryKeyJoinColumn()
+    private BillingAdressEntity billingAddress;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity user;
