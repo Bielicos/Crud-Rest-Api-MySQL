@@ -17,7 +17,7 @@ import java.util.List;
 public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "accountId")
+    @Column(name = "account_id")
     private int accountId;
 
     @Column(name = "description")
@@ -30,9 +30,9 @@ public class AccountEntity {
     private BillingAdressEntity billingAddress;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @OneToMany(mappedBy = "account")
-    public List<AccountEntity> accounts;
+    public List<AccountStockEntity> accountStocks;
 }

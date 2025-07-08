@@ -10,13 +10,13 @@ public class AccountStockEntity {
 
     @ManyToOne
     @MapsId("accountId")
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "account_id")
     private AccountEntity account;
 
     @ManyToOne
     @MapsId("stockId")
-    @JoinColumn(name = "stockId")
-    private stockEntity stock;
+    @JoinColumn(name = "stock_id")
+    private StockEntity stock;
 
     @Column
     private Integer quantity;

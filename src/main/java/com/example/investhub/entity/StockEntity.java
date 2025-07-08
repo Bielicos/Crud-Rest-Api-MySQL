@@ -15,10 +15,10 @@ import lombok.Setter;
 @Setter
 @Table(name = "stock_tb")
 @Entity
-public class stockEntity {
+public class StockEntity {
 
     @Id
-    @Column(name = "stockId")
+    @Column(name = "stock_id")
     private String stockId;
 
     @Column(name = "description")

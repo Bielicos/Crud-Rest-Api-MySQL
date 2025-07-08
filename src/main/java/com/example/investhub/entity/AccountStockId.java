@@ -13,9 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Embeddable // Indica pro Hibernate que essa classe vai ser um campo de identificador da nossa entidade.
 public class AccountStockId { // Essa classe será uma chave composta entre o accountId e o stockId
-    @Column(name = "accountId")
+    @Column(name = "account_id")
     private Integer accountId;
 
-    @Column(name = "stockId")
-    private Integer stockId;
+    @Column(name = "stock_id")
+    private String stockId;
 }
