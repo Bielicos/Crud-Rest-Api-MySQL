@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "stock_tb")
 @Entity
-public class StockEntity {
+public class Stock {
     @Id
     @Column(name = "stock_id")
     private String stockId;

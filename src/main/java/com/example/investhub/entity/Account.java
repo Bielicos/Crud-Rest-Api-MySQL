@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "accounts_tb")
-public class AccountEntity {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
@@ -27,12 +27,12 @@ public class AccountEntity {
 
     @OneToOne(mappedBy = "account")
     @PrimaryKeyJoinColumn(name = "account_id", referencedColumnName = "account_id")
-    private BillingAddressEntity billingAddress;
+    private BillingAddress billingAddress;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
     @OneToMany(mappedBy = "account")
-    public List<AccountStockEntity> accountStocks;
+    public List<AccountStock> accountStocks;
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "billing_address_tb")
 @Entity
-public class BillingAddressEntity {
+public class BillingAddress {
     @Id
     @Column(name = "account_id")
     private int accountId;
@@ -20,7 +20,7 @@ public class BillingAddressEntity {
     @OneToOne
     @MapsId // O que qualifica o identificador acima é a entidade abaixo "Account". Logo, essa anotation garante que o primary key da entidade "Account" seja a coluna "accountId" acima.
     @JoinColumn(name = "account_id")
-    private AccountEntity account;
+    private Account account;
 
     @Column
     private String street;

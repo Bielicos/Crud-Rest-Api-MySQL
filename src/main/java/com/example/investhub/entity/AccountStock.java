@@ -4,19 +4,19 @@ import jakarta.persistence.*;
 
 @Table(name = "account_stock_tb")
 @Entity
-public class AccountStockEntity {
+public class AccountStock {
     @EmbeddedId
     private AccountStockId id;
 
     @ManyToOne
     @MapsId("accountId")
     @JoinColumn(name = "account_id")
-    private AccountEntity account;
+    private Account account;
 
     @ManyToOne
     @MapsId("stockId")
     @JoinColumn(name = "stock_id")
-    private StockEntity stock;
+    private Stock stock;
 
     @Column
     private Integer quantity;

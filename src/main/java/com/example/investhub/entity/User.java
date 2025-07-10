@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "user_tb")
 @Entity
-public class UserEntity {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
@@ -39,5 +39,5 @@ public class UserEntity {
     // Relacionamento
 
     @OneToMany(mappedBy = "user")
-    private List<AccountEntity> accounts;
+    private List<Account> accounts;
 }

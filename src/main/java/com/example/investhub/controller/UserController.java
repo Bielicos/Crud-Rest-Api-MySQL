@@ -2,7 +2,7 @@ package com.example.investhub.controller;
 
 import com.example.investhub.dto.CreateUserDTO;
 import com.example.investhub.dto.UpdateUserDTO;
-import com.example.investhub.entity.UserEntity;
+import com.example.investhub.entity.User;
 import com.example.investhub.repository.UserRepository;
 import com.example.investhub.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable String userId) {
+    public ResponseEntity<User> getUserById(@PathVariable String userId) {
         var user = userService.getUserById(userId);
         if (user.isPresent()) {
             return ResponseEntity.ok().body(user.get());
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<UserEntity>> getUsers() {
+    public ResponseEntity<List<User>> getUsers() {
         var users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }

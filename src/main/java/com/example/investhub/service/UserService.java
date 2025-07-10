@@ -2,7 +2,7 @@ package com.example.investhub.service;
 
 import com.example.investhub.dto.CreateUserDTO;
 import com.example.investhub.dto.UpdateUserDTO;
-import com.example.investhub.entity.UserEntity;
+import com.example.investhub.entity.User;
 import com.example.investhub.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class UserService {
     }
 
     public Integer createUser (CreateUserDTO createUserDTO) {
-        UserEntity userEntity = new UserEntity();
+        User userEntity = new User();
         userEntity.setUsername(createUserDTO.username());
         userEntity.setEmail(createUserDTO.email());
         userEntity.setPassword(createUserDTO.password());
@@ -26,12 +26,12 @@ public class UserService {
         return savedUser.getUserId();
     }
 
-    public Optional<UserEntity> getUserById (String userId) {
+    public Optional<User> getUserById (String userId) {
         Integer id = Integer.parseInt(userId);
         return userRepository.findById(id);
     }
 
-    public List<UserEntity> getAllUsers () {
+    public List<User> getAllUsers () {
         return userRepository.findAll();
     }
 
