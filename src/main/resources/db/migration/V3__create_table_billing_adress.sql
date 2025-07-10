@@ -1,11 +1,7 @@
--- Cria a tabela de endereço de cobrança com PK compartilhada via MapsId
-CREATE TABLE billingAdress_tb (
-        accountId INT PRIMARY KEY,
+CREATE TABLE billing_address_tb (
+        account_id INT NOT NULL,
         street    VARCHAR(255),
         number    INT,
-        CONSTRAINT fk_billingaddress_account
-          FOREIGN KEY (accountId)
-              REFERENCES accounts_tb(account_id)
-              ON UPDATE CASCADE
-              ON DELETE CASCADE
+        PRIMARY KEY (account_id),
+        FOREIGN KEY (account_id) REFERENCES accounts_tb(account_id)
 );

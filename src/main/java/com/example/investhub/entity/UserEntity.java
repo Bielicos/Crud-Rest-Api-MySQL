@@ -29,9 +29,11 @@ public class UserEntity {
     private String password;
 
     @CreationTimestamp
+    @Column(name = "creation_time_stamp", nullable = false, updatable = false)
     private Instant creationTimeStamp;
 
     @UpdateTimestamp
+    @Column(name = "modification_time_stamp", nullable = false)
     private Instant modificationTimeStamp;
 
     // Relacionamento

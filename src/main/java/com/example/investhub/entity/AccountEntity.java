@@ -26,8 +26,8 @@ public class AccountEntity {
     // Relacionamentos
 
     @OneToOne(mappedBy = "account")
-    @PrimaryKeyJoinColumn()
-    private BillingAdressEntity billingAddress;
+    @PrimaryKeyJoinColumn(name = "account_id", referencedColumnName = "account_id")
+    private BillingAddressEntity billingAddress;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

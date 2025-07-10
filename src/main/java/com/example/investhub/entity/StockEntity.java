@@ -16,13 +16,10 @@ import lombok.Setter;
 @Table(name = "stock_tb")
 @Entity
 public class StockEntity {
-
     @Id
     @Column(name = "stock_id")
     private String stockId;
 
     @Column(name = "description")
     private String description;
-
-
 }

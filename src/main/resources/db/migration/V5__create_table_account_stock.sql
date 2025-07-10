@@ -1,17 +1,8 @@
--- Cria a tabela de associação ManyToMany entre contas e ações
-CREATE TABLE accountStock_tb (
-     accountId INT    NOT NULL,
-     stockId   VARCHAR(50) NOT NULL,
+CREATE TABLE account_stock_tb (
+     account_id INT    NOT NULL,
+     stock_id   VARCHAR(50) NOT NULL,
      quantity  INT,
-     PRIMARY KEY (accountId, stockId),
-     CONSTRAINT fk_accountstock_account
-         FOREIGN KEY (accountId)
-             REFERENCES accounts_tb(account_id)
-             ON UPDATE CASCADE
-             ON DELETE CASCADE,
-     CONSTRAINT fk_accountstock_stock
-         FOREIGN KEY (stockId)
-             REFERENCES stock_tb(stockId)
-             ON UPDATE CASCADE
-             ON DELETE RESTRICT
+     PRIMARY KEY (account_id, stock_id),
+     FOREIGN KEY (account_id) REFERENCES accounts_tb(account_id),
+     FOREIGN KEY (stock_id) REFERENCES stock_tb(stock_id)
 );

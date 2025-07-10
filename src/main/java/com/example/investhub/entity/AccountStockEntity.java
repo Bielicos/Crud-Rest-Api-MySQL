@@ -2,7 +2,7 @@ package com.example.investhub.entity;
 
 import jakarta.persistence.*;
 
-@Table(name = "accountStock_tb")
+@Table(name = "account_stock_tb")
 @Entity
 public class AccountStockEntity {
     @EmbeddedId

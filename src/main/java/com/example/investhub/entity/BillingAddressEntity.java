@@ -10,9 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "billingAdress_tb")
+@Table(name = "billing_address_tb")
 @Entity
-public class BillingAdressEntity {
+public class BillingAddressEntity {
     @Id
     @Column(name = "account_id")
     private int accountId;
