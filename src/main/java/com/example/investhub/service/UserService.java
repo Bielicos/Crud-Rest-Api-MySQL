@@ -1,5 +1,6 @@
 package com.example.investhub.service;
 
+import com.example.investhub.dto.AccountResponseDTO;
 import com.example.investhub.dto.CreateAccountDTO;
 import com.example.investhub.dto.CreateUserDTO;
 import com.example.investhub.dto.UpdateUserDTO;
@@ -92,5 +93,22 @@ public class UserService {
         account.setBillingAddress(billingAddress); // BillingAdress vai ser salvo ao entrar no cascade.
 
         var accountCreated = accountRepository.save(account);
+    }
+
+    public List<AccountResponseDTO> getAllAccountsFromUser (String userId) {
+        // Checando se o usuário existe
+        Integer id = Integer.parseInt(userId);
+        var userEntity = userRepository.findById(id).orElseThrow(
+                () -> {
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+                }
+        );
+
+        // Pega a lista de usuarios e mapeia para transforma-la em uma lista de AccountResponseDTO
+        return userEntity.getAccounts()
+                .stream()
+                .map(ac -> // Cada um dos usuários está se tornando uma instância de AccountResponseDTO
+                        new AccountResponseDTO(Integer.toString(ac.getAccountId()) , ac.getDescription()))
+                .toList(); // Todas as instâncias são colocadas na lista.
     }
 }

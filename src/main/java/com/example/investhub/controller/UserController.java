@@ -1,5 +1,6 @@
 package com.example.investhub.controller;
 
+import com.example.investhub.dto.AccountResponseDTO;
 import com.example.investhub.dto.CreateAccountDTO;
 import com.example.investhub.dto.CreateUserDTO;
 import com.example.investhub.dto.UpdateUserDTO;
@@ -68,7 +69,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/accounts")
-    public ResponseEntity<Void> getUserAccounts(@PathVariable String userId) {
-
+    public ResponseEntity<List<AccountResponseDTO>> getUserAccounts(@PathVariable String userId) {
+        var accounts = userService.getAllAccountsFromUser(userId);
+        return ResponseEntity.ok(accounts);
     }
 }
