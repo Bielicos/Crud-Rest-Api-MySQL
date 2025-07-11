@@ -38,6 +38,6 @@ public class User {
 
     // Relacionamento
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts;
 }

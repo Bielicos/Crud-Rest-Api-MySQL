@@ -1,7 +1,9 @@
 package com.example.investhub.controller;
 
+import com.example.investhub.dto.CreateAccountDTO;
 import com.example.investhub.dto.CreateUserDTO;
 import com.example.investhub.dto.UpdateUserDTO;
+import com.example.investhub.entity.Account;
 import com.example.investhub.entity.User;
 import com.example.investhub.repository.UserRepository;
 import com.example.investhub.service.UserService;
@@ -12,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/v2/users")
 public class UserController {
     private UserRepository userRepository;
     private UserService userService;
@@ -55,5 +57,18 @@ public class UserController {
     public ResponseEntity<Void> updateUserById(@PathVariable String userId, @RequestBody UpdateUserDTO updateUserDTO ) {
         userService.updateUserById(userId, updateUserDTO);
         return ResponseEntity.noContent().build();
+    }
+
+    // Accounts
+
+    @PostMapping("/{userId}/accounts")
+    public ResponseEntity<String> signup(@PathVariable String userId, @RequestBody CreateAccountDTO  createAccountDTO) {
+        userService.createAccount(userId, createAccountDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{userId}/accounts")
+    public ResponseEntity<Void> getUserAccounts(@PathVariable String userId) {
+
     }
 }

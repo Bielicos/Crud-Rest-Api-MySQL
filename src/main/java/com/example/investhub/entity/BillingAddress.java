@@ -17,7 +17,7 @@ public class BillingAddress {
     @Column(name = "account_id")
     private int accountId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId // O que qualifica o identificador acima é a entidade abaixo "Account". Logo, essa anotation garante que o primary key da entidade "Account" seja a coluna "accountId" acima.
     @JoinColumn(name = "account_id")
     private Account account;

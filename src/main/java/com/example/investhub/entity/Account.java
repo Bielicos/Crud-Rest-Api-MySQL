@@ -25,7 +25,7 @@ public class Account {
 
     // Relacionamentos
 
-    @OneToOne(mappedBy = "account")
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn(name = "account_id", referencedColumnName = "account_id")
     private BillingAddress billingAddress;
 
