@@ -1,10 +1,7 @@
 package com.example.investhub.controller;
 
-import com.example.investhub.dto.AccountResponseDTO;
-import com.example.investhub.dto.CreateAccountDTO;
-import com.example.investhub.dto.CreateUserDTO;
-import com.example.investhub.dto.UpdateUserDTO;
-import com.example.investhub.entity.Account;
+import com.example.investhub.dto.CreateUserDto;
+import com.example.investhub.dto.UpdateUserDto;
 import com.example.investhub.entity.User;
 import com.example.investhub.repository.UserRepository;
 import com.example.investhub.service.UserService;
@@ -26,14 +23,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> signup(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<String> signup(@RequestBody CreateUserDto createUserDTO) {
         Integer newUserId = userService.createUser(createUserDTO);
         var location = URI.create("/crud/signup/" + newUserId.toString());
         return ResponseEntity.created(location).body("ID do usuário : " + newUserId);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable String userId) {
+    public ResponseEntity<User> getUserById(@PathVariable("userId") String userId) {
         var user = userService.getUserById(userId);
         if (user.isPresent()) {
             return ResponseEntity.ok().body(user.get());
@@ -49,28 +46,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable String userId) {
+    public ResponseEntity<Void> deleteUserById(@PathVariable("userId") String userId) {
         userService.deleteUserById(userId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUserById(@PathVariable String userId, @RequestBody UpdateUserDTO updateUserDTO ) {
+    public ResponseEntity<Void> updateUserById(@PathVariable("userId") String userId, @RequestBody UpdateUserDto updateUserDTO ) {
         userService.updateUserById(userId, updateUserDTO);
         return ResponseEntity.noContent().build();
-    }
-
-    // Accounts
-
-    @PostMapping("/{userId}/accounts")
-    public ResponseEntity<String> signup(@PathVariable String userId, @RequestBody CreateAccountDTO  createAccountDTO) {
-        userService.createAccount(userId, createAccountDTO);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/{userId}/accounts")
-    public ResponseEntity<List<AccountResponseDTO>> getUserAccounts(@PathVariable String userId) {
-        var accounts = userService.getAllAccountsFromUser(userId);
-        return ResponseEntity.ok(accounts);
     }
 }

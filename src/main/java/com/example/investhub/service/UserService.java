@@ -1,20 +1,13 @@
 package com.example.investhub.service;
 
-import com.example.investhub.dto.AccountResponseDTO;
-import com.example.investhub.dto.CreateAccountDTO;
-import com.example.investhub.dto.CreateUserDTO;
-import com.example.investhub.dto.UpdateUserDTO;
-import com.example.investhub.entity.Account;
-import com.example.investhub.entity.BillingAddress;
+import com.example.investhub.dto.CreateUserDto;
+import com.example.investhub.dto.UpdateUserDto;
 import com.example.investhub.entity.User;
 import com.example.investhub.repository.AccountRepository;
 import com.example.investhub.repository.BillingAddressRepository;
 import com.example.investhub.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +23,7 @@ public class UserService {
         this.billingAddressRepository = billingAddressRepository;
     }
 
-    public Integer createUser (CreateUserDTO createUserDTO) {
+    public Integer createUser (CreateUserDto createUserDTO) {
         User userEntity = new User();
         userEntity.setUsername(createUserDTO.username());
         userEntity.setEmail(createUserDTO.email());
@@ -56,7 +49,7 @@ public class UserService {
         }
     }
 
-    public void updateUserById (String userId, UpdateUserDTO updateUserDTO) {
+    public void updateUserById (String userId, UpdateUserDto updateUserDTO) {
         Integer id = Integer.parseInt(userId);
         var UserEntity =  userRepository.findById(id);
         if(UserEntity.isPresent()) {
@@ -69,46 +62,5 @@ public class UserService {
             }
             userRepository.save(user);
         }
-    }
-
-    public void createAccount (String userId, CreateAccountDTO createAccountDTO) {
-        Integer id = Integer.parseInt(userId);
-        var userEntity = userRepository.findById(id).orElseThrow(
-                () -> {
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-                }
-        );
-
-        // DTO -> Entity
-        var account = new Account();
-        account.setUser(userEntity);
-        account.setDescription(createAccountDTO.description());
-
-        var billingAddress = new BillingAddress();
-        billingAddress.setStreet(createAccountDTO.street());
-        billingAddress.setNumber(createAccountDTO.number());
-
-        // Relacionamento
-        billingAddress.setAccount(account);
-        account.setBillingAddress(billingAddress); // BillingAdress vai ser salvo ao entrar no cascade.
-
-        var accountCreated = accountRepository.save(account);
-    }
-
-    public List<AccountResponseDTO> getAllAccountsFromUser (String userId) {
-        // Checando se o usuário existe
-        Integer id = Integer.parseInt(userId);
-        var userEntity = userRepository.findById(id).orElseThrow(
-                () -> {
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-                }
-        );
-
-        // Pega a lista de usuarios e mapeia para transforma-la em uma lista de AccountResponseDTO
-        return userEntity.getAccounts()
-                .stream()
-                .map(ac -> // Cada um dos usuários está se tornando uma instância de AccountResponseDTO
-                        new AccountResponseDTO(Integer.toString(ac.getAccountId()) , ac.getDescription()))
-                .toList(); // Todas as instâncias são colocadas na lista.
     }
 }
