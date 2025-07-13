@@ -1,6 +1,7 @@
 package com.example.investhub.service;
 
 import com.example.investhub.dto.AccountResponseDto;
+import com.example.investhub.dto.AccountStockResponseDto;
 import com.example.investhub.dto.AssociateAccountStockDto;
 import com.example.investhub.dto.CreateAccountDto;
 import com.example.investhub.entity.Account;
@@ -104,7 +105,19 @@ public class AccountService {
         accountStockRepository.save(entity);
     }
 
-    public Object listStocks(String accountId) {
-        
+    public List<AccountStockResponseDto> listStocks(String accountId) {
+        Integer IntegerAccountId = Integer.parseInt(accountId);
+        // Checar se a conta existe
+        var accountEntity = accountRepository.findById(IntegerAccountId).orElseThrow(
+                () -> {
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
+                }
+        );
+        return accountEntity.getAccountStocks()
+                .stream()
+                .map( st -> {
+                    return new AccountStockResponseDto(st.getStock().getStockId(), st.getQuantity(), 0.0);
+                })
+                .toList();
     }
 }

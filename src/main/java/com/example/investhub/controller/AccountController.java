@@ -1,6 +1,7 @@
 package com.example.investhub.controller;
 
 import com.example.investhub.dto.AccountResponseDto;
+import com.example.investhub.dto.AccountStockResponseDto;
 import com.example.investhub.dto.AssociateAccountStockDto;
 import com.example.investhub.dto.CreateAccountDto;
 import com.example.investhub.service.AccountService;
@@ -40,8 +41,8 @@ public class AccountController {
     }
 
     @GetMapping("/{accountId}/stocks")
-    public ResponseEntity<List<AccountResponseDto>> aaa (@PathVariable("accountId") String accountId) {
+    public ResponseEntity<List<AccountStockResponseDto>> listStocksFromAccount (@PathVariable("accountId") String accountId) {
         var stocks = accountService.listStocks(accountId);
-        return ResponseEntity.ok(stocks).build();
+        return ResponseEntity.ok(stocks);
     }
 }
