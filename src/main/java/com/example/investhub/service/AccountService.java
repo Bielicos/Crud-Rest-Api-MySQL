@@ -1,5 +1,6 @@
 package com.example.investhub.service;
 
+import com.example.investhub.client.BrapiClient;
 import com.example.investhub.dto.AccountResponseDto;
 import com.example.investhub.dto.AccountStockResponseDto;
 import com.example.investhub.dto.AssociateAccountStockDto;
@@ -12,6 +13,7 @@ import com.example.investhub.repository.AccountRepository;
 import com.example.investhub.repository.AccountStockRepository;
 import com.example.investhub.repository.StockRepository;
 import com.example.investhub.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,17 +22,23 @@ import java.util.List;
 
 @Service
 public class AccountService {
+    @Value("${BEARER_TOKEN}")
+    private String token;
+
     private AccountRepository accountRepository;
     private StockRepository stockRepository;
     private UserRepository userRepository;
     private AccountStockRepository accountStockRepository;
+    private BrapiClient brapiClient;
 
     public AccountService(AccountRepository accountRepository, StockRepository stockRepository,
-                          UserRepository userRepository,  AccountStockRepository accountStockRepository) {
+                          UserRepository userRepository,  AccountStockRepository accountStockRepository,
+                          BrapiClient brapiClient) {
         this.accountRepository = accountRepository;
         this.stockRepository = stockRepository;
         this.userRepository = userRepository;
         this.accountStockRepository = accountStockRepository;
+        this.brapiClient = brapiClient;
     }
 
     public void createAccount (String userId, CreateAccountDto createAccountDTO) {
@@ -116,8 +124,26 @@ public class AccountService {
         return accountEntity.getAccountStocks()
                 .stream()
                 .map( st -> {
-                    return new AccountStockResponseDto(st.getStock().getStockId(), st.getQuantity(), 0.0);
+                    return new AccountStockResponseDto(
+                            st.getStock().getStockId(),
+                            st.getQuantity(),
+                            getTotal(st.getStock().getStockId(), st.getQuantity())
+                    );
                 })
                 .toList();
+    }
+
+    private double getTotal (String stockId, Integer quantity) {
+        var bearer = "Bearer " + token;
+        var response = brapiClient.getQuote(stockId, bearer);
+        var results = response.results();
+        if (results == null || results.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_GATEWAY,
+                    "BRAPI não retornou cotação para " + stockId
+            );
+        }
+        double price = results.get(0).regularMarketPrice();
+        return quantity * price;
     }
 }
