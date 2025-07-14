@@ -2,6 +2,7 @@ package com.example.investhub.controller;
 
 import com.example.investhub.dto.CreateUserDto;
 import com.example.investhub.dto.UpdateUserDto;
+import com.example.investhub.dto.UserResponseDto;
 import com.example.investhub.entity.User;
 import com.example.investhub.repository.UserRepository;
 import com.example.investhub.service.UserService;
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<UserResponseDto>> getUsers() {
         var users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }

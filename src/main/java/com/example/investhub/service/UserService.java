@@ -2,6 +2,7 @@ package com.example.investhub.service;
 
 import com.example.investhub.dto.CreateUserDto;
 import com.example.investhub.dto.UpdateUserDto;
+import com.example.investhub.dto.UserResponseDto;
 import com.example.investhub.entity.User;
 import com.example.investhub.repository.AccountRepository;
 import com.example.investhub.repository.BillingAddressRepository;
@@ -37,8 +38,14 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public List<User> getAllUsers () {
-        return userRepository.findAll();
+    public List<UserResponseDto> getAllUsers () {
+        var allUsers = userRepository.findAll()
+                .stream()
+                .map(us -> {
+                    return new UserResponseDto(us.getUserId(), us.getUsername(), us.getEmail(), us.getPassword());
+                })
+                .toList();
+        return allUsers;
     }
 
     public void deleteUserById (String userId) {
