@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/stocks")
+@RequestMapping("/v2/stocks")
 public class StockController {
 
     private StockService stockService;
