@@ -1,7 +1,7 @@
 https://www.youtube.com/watch?v=1M9mFNo6UAY
 Visualize você mesmo! (:
 
-API de agregador de investimentos.
+API RESTFUL capaz de gerenciar de usuários, contas e ações
 
 🚀 Tecnologias Utilizadas
 
